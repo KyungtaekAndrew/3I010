@@ -1,0 +1,15 @@
+#include<stdio.h>
+
+int main (int argc, char *argv[]){
+  int i = 0;
+
+  for(i = 2; i < argc; i++){
+    if(fork() == 0){
+      execl("/bin/grep", "grep", argv[1], argv[i], NULL);
+    }
+  }
+  for(i = 2; i < argc; i++){
+    wait(NULL);
+  }
+  return 0;
+}

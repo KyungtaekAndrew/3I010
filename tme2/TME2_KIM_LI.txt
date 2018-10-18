@@ -1,0 +1,8 @@
+EXO1)
+real	0m5.001s
+user	0m0.000s
+sys	0m0.000s
+
+On remarque que l'on n'est ni en mode utilisateur ni en mode systeme.
+
+EXO2)

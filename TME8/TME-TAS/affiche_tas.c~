@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include "affiche_tas.h"
+#include <ctype.h>
+
+void afficher_tas(){
+    int i, j;
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 16; j++) { 
+	    printf("%4d", j + 16*i);
+        }
+        printf("\n");
+        for (j = 0; j < 16; j++) { 
+	    printf("%4d", tas[j + 16*i]);
+        }
+        printf("\n");
+        for (j = 0; j < 16; j++) { 
+	    if (isalnum(tas[j + 16*i])) {
+	        printf("%4c", tas[j + 16*i]);
+	    } else {
+		printf("    ");
+	    }
+        }
+        printf("\n\n");
+    }
+    printf("---------------------------------------------------------------\n\n");
+}
+
+void tas_init(){
+  libre = 0;
+  tas[0] = TAILTAS;
+  tas[1] = -1;
+}
+
+int first_fit(int taille, int* prec){
+  int p=libre;
+  while ((p!=-1)&&(tas[p]<taille)){
+    *prec=p;
+    p=tas[p+1];
+  }
+  return p;
+}
+
+/*
+int first_fit(int taille, int* prec){
+  int actuel=libre;
+  int precedent=-1;
+  while (true){
+    if(tas[actuel] >= taille){
+      
+      *prec=precedent;
+      return actuel;
+    } else {
+      precedent=actuel;
+      actuel=tas[actuel+1];
+    }
+  }
+}
+*/
+
+char *tas_malloc(unsigned int taille){
+  int p, prec;
+  p = first_fit(taille, &prec);
+  if(p==libre){
+    if (tas[p]==taille+1 || tas[p] == taille){
+      libre = tas[p+1];
+      return &tas[p+1];
+    } else {
+      libre=tas[p+taille+1];
+      tas[p]=taille;
+      tas[p+taille+1]=tas[p]-(taille+1);
+      tas[p+taille+2]=tas[p+1];
+    }
+  }else{
+    if (p==-1){
+      return 
+    }
+  }
+}
+
+int tas_free(char *ptr){
+
+}
